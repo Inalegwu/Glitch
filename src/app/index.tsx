@@ -1,11 +1,11 @@
 import { normalize } from "@/utils/functions";
 import { AnimatedBox, Box, Text } from "@atoms";
 import { Container, TouchableOpacity } from "@components";
+import { useRouter } from "expo-router";
 import React from "react";
-import { useSharedValue } from "react-native-reanimated";
 
 export default function Page() {
-  const translateX = useSharedValue(0);
+  const router = useRouter();
 
   return (
     <Container alignItems="center" justifyContent="center">
@@ -75,7 +75,9 @@ export default function Page() {
         />
       </Box>
       <Box width="100%" flex={0.6} alignItems="center" justifyContent="center">
-        <Text fontSize={normalize(20)}>Let's Get Started</Text>
+        <Text fontSize={normalize(18)} color="neutral300">
+          Let's Get Started
+        </Text>
         <Text textAlign="center" fontSize={normalize(33)}>
           All Your Favourite Streams In One Place
         </Text>
@@ -92,6 +94,7 @@ export default function Page() {
           borderRadius="full"
           width="100%"
           backgroundColor="purple500"
+          onPress={() => router.navigate("/login")}
         >
           <Text>Login With Twitch</Text>
         </TouchableOpacity>

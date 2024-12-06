@@ -19,6 +19,7 @@ require("dotenv").config({
 // schema for our client environment to be validated
 const client = z.object({
   APP_ENV: z.enum(["development", "staging", "production"]),
+  EXPO_PUBLIC_TWITCH_CLIENT_ID: z.string(),
 });
 
 const buildTime = z.object({});
@@ -29,6 +30,7 @@ const buildTime = z.object({});
  */
 const _clientEnv = {
   APP_ENV,
+  EXPO_PUBLIC_TWITCH_CLIENT_ID: process.env.EXPO_PUBLIC_TWITCH_CLIENT_ID,
 };
 
 /**

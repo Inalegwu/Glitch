@@ -1,11 +1,51 @@
 import { normalize } from "@/utils/functions";
 import { AnimatedBox, Box, Text } from "@atoms";
 import { Container, TouchableOpacity } from "@components";
+import { Env } from "@env";
+import { makeRedirectUri, useAuthRequest } from "expo-auth-session";
 import { useRouter } from "expo-router";
-import React from "react";
+import * as WebBrowser from "expo-web-browser";
+import React, { useEffect } from "react";
+
+WebBrowser.maybeCompleteAuthSession();
+
+const discovery = {
+  authorizationEndpoint: "https://id.twitch.tv/oauth2/authorize",
+  tokenEndpoint: "https://id.twitch.tv/oauth2/token",
+  revocationEndpoint: "https://id.twitch.tv/oauth2/revoke",
+};
 
 export default function Page() {
   const router = useRouter();
+
+  const [request, response, promptAsync] = useAuthRequest(
+    {
+      clientId: Env.EXPO_PUBLIC_TWITCH_CLIENT_ID,
+      redirectUri: makeRedirectUri({
+        scheme: "com.glitch.app",
+      }),
+      scopes: [
+        "user:read:email",
+        "user:bot",
+        "user:read:follows",
+        "user:edit",
+        "user:read:blocked_users",
+        "user:read:chat",
+        "user:manage:chat_color",
+        "user:read:whispers",
+        "user:write:chat",
+        "user:read:broadcast",
+      ],
+    },
+    discovery,
+  );
+
+  useEffect(() => {
+    if (response?.type === "success") {
+      const { code } = response.params;
+      console.log({ code });
+    }
+  }, [response]);
 
   return (
     <Container alignItems="center" justifyContent="center">

@@ -13,10 +13,7 @@ import {
 } from "@shopify/restyle";
 import type { Theme } from "@theme";
 import { memo } from "react";
-import {
-  FlatList as NativeFlatList,
-  type FlatListProps as NativeFlatListProps,
-} from "react-native";
+import { type FlatListProps, FlatList as NativeFlatList } from "react-native";
 
 type RestyleProps = LayoutProps<Theme> &
   BorderProps<Theme> &
@@ -25,7 +22,7 @@ type RestyleProps = LayoutProps<Theme> &
   SpacingShorthandProps<Theme> &
   BackgroundColorShorthandProps<Theme>;
 
-type Props<T> = NativeFlatListProps<T> & RestyleProps;
+type Props<T> = FlatListProps<T> & RestyleProps;
 
 const restyleFunctions = composeRestyleFunctions<Theme, RestyleProps>([
   spacing,

@@ -1,4 +1,3 @@
-// React Query Config Goes Here
 import { QueryClient } from "@tanstack/react-query";
 
 const qClient = new QueryClient({

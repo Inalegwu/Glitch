@@ -6,14 +6,18 @@ import { ThemeProvider } from "@shopify/restyle";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { theme } from "@theme";
 import { useFonts } from "expo-font";
-import { Slot } from "expo-router";
+import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import React from "react";
+import { LogBox } from "react-native";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 enableReactTracking({
   auto: true,
 });
+
+LogBox.ignoreAllLogs(true);
 
 enableReactNativeComponents();
 
@@ -35,15 +39,17 @@ export default function Layout() {
   }
 
   return (
-    <ThemeProvider theme={theme}>
-      <Box flex={1} backgroundColor="black" width="100%">
-        <StatusBar style="light" />
-        <SafeAreaView style={{ flex: 1 }}>
-          <QueryClientProvider client={qClient}>
-            <Slot />
-          </QueryClientProvider>
-        </SafeAreaView>
-      </Box>
-    </ThemeProvider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <ThemeProvider theme={theme}>
+        <Box flex={1} backgroundColor="black" width="100%">
+          <StatusBar style="light" />
+          <SafeAreaView style={{ flex: 1 }}>
+            <QueryClientProvider client={qClient}>
+              <Stack screenOptions={{ headerShown: false }} />
+            </QueryClientProvider>
+          </SafeAreaView>
+        </Box>
+      </ThemeProvider>
+    </GestureHandlerRootView>
   );
 }

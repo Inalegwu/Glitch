@@ -1,90 +1,110 @@
-import { SCREEN_WIDTH } from "@/utils/constants";
 import { normalize } from "@/utils/functions";
-import { Box, Text } from "@atoms";
-import {
-  Container,
-  FlatList,
-  Icon,
-  Input,
-  TouchableOpacity,
-} from "@components";
+import { AnimatedBox, Box, Text } from "@atoms";
+import { Container, TouchableOpacity } from "@components";
 import React from "react";
+import { useSharedValue } from "react-native-reanimated";
 
 export default function Page() {
+  const translateX = useSharedValue(0);
+
   return (
-    <Container padding={3} gap={3}>
+    <Container alignItems="center" justifyContent="center">
+      <Text fontSize={normalize(28)} color="purple500">
+        Glitch
+      </Text>
       <Box
+        flex={1}
         flexDirection="row"
-        width="100%"
         alignItems="center"
-        justifyContent="space-between"
+        justifyContent="center"
+        position="relative"
       >
-        <Text fontSize={normalize(28)}>Glitch</Text>
-        <TouchableOpacity backgroundColor="neutral900" borderRadius="full">
-          <Icon name="Bell" size={4} />
-        </TouchableOpacity>
-      </Box>
-      <Box width="100%">
-        <Box
-          flexDirection="row"
-          alignItems="center"
-          justifyContent="flex-start"
-          width="100%"
-          backgroundColor="neutral900"
-          borderRadius={5}
-        >
-          <Box padding={3}>
-            <Icon name="Search" size={4} />
-          </Box>
-          <Input
-            paddingVertical={3}
-            width="100%"
-            placeholder="Search"
-            placeholderTextColor="#ffffff"
-          />
-        </Box>
-      </Box>
-      <Box width="100%">
-        <Box
-          width="100%"
-          flexDirection="row"
-          alignItems="center"
-          justifyContent="space-between"
-        >
-          <Text fontSize={normalize(19)}>Live Now</Text>
-          <TouchableOpacity>
-            <Text fontSize={normalize(13)} color="neutral700">
-              See More
-            </Text>
-          </TouchableOpacity>
-        </Box>
-        <FlatList
-          horizontal
-          data={[
-            {
-              title: "Lorem Ipsum",
-              broadcaster: "dmmmulroy",
-            },
-            {
-              title: "Get in Here",
-              broadcaster: "disgruntleddev",
-            },
-          ]}
-          contentContainerStyle={{ gap: 10 }}
-          renderItem={({ item }) => {
-            return (
-              <Box flex={1} width={SCREEN_WIDTH * 0.6}>
-                <Box
-                  height={100}
-                  width="100%"
-                  flex={1}
-                  backgroundColor="neutral800"
-                />
-                <Text fontSize={normalize(13)}>{item.title}</Text>
-              </Box>
-            );
+        <AnimatedBox
+          padding={1}
+          backgroundColor="purple600"
+          width={250}
+          height={330}
+          borderRadius={8}
+          zIndex={2}
+          position="absolute"
+          borderWidth={3}
+          borderColor="purple800"
+          style={{
+            transform: [
+              {
+                rotateZ: "6deg",
+              },
+            ],
           }}
         />
+        <AnimatedBox
+          padding={1}
+          backgroundColor="purple800"
+          width={250}
+          height={330}
+          borderRadius={8}
+          zIndex={1}
+          position="absolute"
+          borderWidth={3}
+          borderColor="purple600"
+          style={{
+            transform: [
+              {
+                rotateZ: "-3deg",
+              },
+            ],
+          }}
+        />
+        <AnimatedBox
+          padding={1}
+          backgroundColor="purple700"
+          width={250}
+          height={330}
+          borderRadius={8}
+          position="absolute"
+          zIndex={0}
+          borderWidth={3}
+          borderColor="purple500"
+          style={{
+            transform: [
+              {
+                rotateZ: "2deg",
+              },
+            ],
+          }}
+        />
+      </Box>
+      <Box width="100%" flex={0.6} alignItems="center" justifyContent="center">
+        <Text fontSize={normalize(20)}>Let's Get Started</Text>
+        <Text textAlign="center" fontSize={normalize(33)}>
+          All Your Favourite Streams In One Place
+        </Text>
+        <Text fontSize={normalize(16)} color="neutral500">
+          Explore The Best of Twitch
+        </Text>
+      </Box>
+      <Box gap={3} width="100%">
+        <TouchableOpacity
+          flexDirection="row"
+          alignItems="center"
+          justifyContent="center"
+          padding={3}
+          borderRadius="full"
+          width="100%"
+          backgroundColor="purple500"
+        >
+          <Text>Login With Twitch</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          alignItems="center"
+          justifyContent="center"
+          borderWidth={1}
+          borderRadius="full"
+          borderColor="purple500"
+          padding={3}
+        >
+          <Text>Watch as Guest</Text>
+        </TouchableOpacity>
       </Box>
     </Container>
   );
